@@ -2,8 +2,8 @@ from Mail import Mail
 from PhyFinder import PhyFinder
 
 class Inbox:
-    def __init__ (self, trusted_addressed, malicious_addressed, user_name):
-        self.Mechanism = PhyFinder(trusted_addressed, malicious_addressed, user_name)
+    def __init__ (self, trusted_addresses, malicious_addresses, user_name):
+        self.Mechanism = PhyFinder(trusted_addresses, malicious_addresses, user_name)
         self.inbox = []
         self.spam = []
 
