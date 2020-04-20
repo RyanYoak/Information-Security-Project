@@ -24,7 +24,7 @@ class Inbox:
 
     def send(self, mail):
         self.Mechanism.checkMail(mail)
-        if mail.phishing >= 0.9:
+        if mail.phishing >= 70:
             self.spam.append(mail)
             print ("Possible phishing attack detected, please check spam folder.")
         else:
