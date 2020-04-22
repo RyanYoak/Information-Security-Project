@@ -12,6 +12,7 @@ class Mail:
         self.phishing = 0
 
     def __str__(self):
+        rounded = round(self.phishing, 2)
         return f'''From: {self.address}
         Time: {self.time}
         Read: {self.read}
@@ -19,5 +20,5 @@ class Mail:
         Body:
         {self.body}
 
-        Phishing: {self.phishing}%
+        Phishing: {rounded}%
         '''
