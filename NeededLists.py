@@ -1,4 +1,4 @@
-urgentPhrases = ["Official Data Breach Notification", "Data Breach", "UPS Label Delivery", "Password Expires", "Change of Password Required", "Required Immediately", "Update your Healthcare Info", "Quick company survey", "A Delivery Attempt was made", "Email Account Updates", "Account Updates", "Revised Vacation & Sick Time Policy", "Required Immediately", "Required", "Immediately", "Official"]
+urgentPhrases = ["Official Data Breach Notification", "Data Breach", "UPS Label Delivery", "Password Expires", "Change of Password Required", "Required Immediately", "Update your Healthcare Info", "Quick company survey", "A Delivery Attempt was made", "Email Account Updates", "Account Updates", "Revised Vacation & Sick Time Policy", "Required Immediately", "Required", "Immediately", "Official", "account information needed"]
 
 companyInformation = {
     "Netflix" : "info@mailer.netflix.com",
