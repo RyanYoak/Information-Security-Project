@@ -6,7 +6,7 @@ from TestMail import getMail
 
 MyInbox = Inbox(["ryan.yoak@gmail.com"], [], "ryan.yoak@gmail.com")
 MyInbox.calibrateThreshold()
-print("The threshold is: ", round(MyInbox.threshold, 2))
+print("The threshold is: ", round(MyInbox.threshold, 2), "%")
 
 for x in range(10):
     MyInbox.send(getMail(time.time())[0])

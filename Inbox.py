@@ -22,7 +22,7 @@ class Inbox:
         incorrect_below = 1
         mail_per_try = 30
         while tries < 1000 or incorrect_above + incorrect_below != 0:
-            #print("Loop number ", tries, " the threshold is ", round(self.threshold, 2))
+#            print("Loop number ", tries, " the threshold is ", round(self.threshold, 2))
             incorrect_above = 0
             incorrect_below = 0
             test_mail = []

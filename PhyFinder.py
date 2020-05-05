@@ -25,16 +25,13 @@ class PhyFinder:
         re.sub(r'\W+', '', body)
         re.sub(r'\W+', '', header)
 
-        body_list = body.split()
-        header_list = header.split()
-
-        full_list = body_list + header_list
+        full_list = body.split() + header.split()
 
         incorrect = 0
         for word in full_list:
             if word not in spell:
                 incorrect = incorrect + 1
-        percent_incorrect = incorrect / len(body_list)
+        percent_incorrect = incorrect / len(full_list)
 
         percent = (percent_incorrect * 100) * 5
 
@@ -43,7 +40,7 @@ class PhyFinder:
 
         return percent
 
-    def linkChecker(self, body):
+    def linkChecker(self, body, threshold):
         links = []
         text_start = body.find("[")
         while text_start != -1:
@@ -57,25 +54,36 @@ class PhyFinder:
             if link[0] != link[1]:
                 bad_links = bad_links + 1
 
+        percent = 0
         if bad_links == 1:
-            return 75
+            percent = threshold * 1.5
 
         if bad_links > 1:
+            percent = 100
+
+        if percent > 100:
             return 100
 
-        return 0
+        return percent
 
     def phrasesChecker(self, header, body):
         phrasesFound = 0
+        in_header = False
+        in_body = False
         for phrase in self.suspicious_phrases:
             if phrase.lower() in header.lower():
                 phrasesFound = phrasesFound + 1
+                in_header = True
             if phrase.lower() in body.lower():
                 phrasesFound = phrasesFound + 1
+                in_body = True
         if header.isupper():
             phrasesFound = phrasesFound + 1
 
         percent = 20 * phrasesFound
+
+        if in_header and in_body:
+            percent = percent * 2
 
         if percent > 100:
             return 100
@@ -99,9 +107,9 @@ class PhyFinder:
             mail.phishing = 100
             return
 
-        trusted_addres = 0
+        trusted_address = 0
         if mail.address not in self.trusted_addresses:
-            trusted_addres = threshold
+            trusted_address = threshold
 
         suspicious_percent = 0
         for address in self.suspicious_addresses:
@@ -115,25 +123,30 @@ class PhyFinder:
 
 
         address_percent = self.addressChecker(mail.address, mail.subject, mail.body)
-        links_percent = self.linkChecker(mail.body)
+        links_percent = self.linkChecker(mail.body, threshold)
         spelling_percent = self.spellCheck(mail.subject, mail.body)
         phrases_percent = self.phrasesChecker(mail.subject, mail.body)
 
-        percent_list.append(trusted_addres)
+        percent_list.append(trusted_address)
         percent_list.append(spelling_percent)
         percent_list.append(links_percent)
         percent_list.append(phrases_percent)
         percent_list.append(suspicious_percent)
         percent_list.append(address_percent)
 
-#        print(percent_list)
+        if self.use_suspicious_addresses:
+            print(percent_list)
+            print(mail)
 
-        percent_list_top = math.floor(len(percent_list) * 0.66)
+        percent_list_top = math.floor(len(percent_list) * 0.5)
         percent_list.sort(reverse=True)
         final_sum = 0
         for x in range(percent_list_top):
             final_sum = final_sum + percent_list[x]
         mail.phishing = final_sum / percent_list_top
+
+        if self.use_suspicious_addresses:
+            print(mail.phishing)
 
         if self.use_suspicious_addresses:
             if final_sum / percent_list_top > threshold:
