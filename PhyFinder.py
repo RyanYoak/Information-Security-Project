@@ -134,9 +134,6 @@ class PhyFinder:
         percent_list.append(suspicious_percent)
         percent_list.append(address_percent)
 
-        if self.use_suspicious_addresses:
-            print(percent_list)
-            print(mail)
 
         percent_list_top = math.floor(len(percent_list) * 0.5)
         percent_list.sort(reverse=True)
@@ -145,8 +142,6 @@ class PhyFinder:
             final_sum = final_sum + percent_list[x]
         mail.phishing = final_sum / percent_list_top
 
-        if self.use_suspicious_addresses:
-            print(mail.phishing)
 
         if self.use_suspicious_addresses:
             if final_sum / percent_list_top > threshold:
